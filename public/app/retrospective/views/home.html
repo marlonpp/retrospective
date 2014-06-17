@@ -1,0 +1,51 @@
+<style>
+.home {
+	text-align: center;
+	margin-top: 40px;
+	font-size: 18px;
+}
+</style>
+
+<div class="home">
+	<div class="row alert alert-info">
+	  {{ 'HOME_TEXT' | translate }}
+	</div>
+    <div id="newRetrospective"  style="margin-bottom: 10px; display: none;" class="row">
+        <form name="retroForm" ng-submit="submitForm()" novalidate>
+            <label for="desc">Description: </label>
+            <input id="desc" type="text" ng-model="description" ng-minlength="1" required/>
+            <input type="submit" class="btn btn-primary" ng-disabled="retroForm.$invalid" value="Add"/>
+        </form>
+    </div>
+    <div  style="margin-bottom: 10px;" class="row">
+        <input id="addNew" type="button" class="btn btn-primary row" value="Add New" style="width: 50%" ng-click="addNew();"/>
+    </div>
+    <div class="row">
+        <!-- Table -->
+        <table class="table" border="1px solid #cccccc" style="margin-bottom: 0px; background-color: white;" width="95%;">
+            <thead>
+            <tr style="height: 50px;">
+                <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Description</th>
+                <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="height: 50px;" ng-repeat="retro in retros | startFrom: currentPage*pageSize | limitTo:pageSize"  ng-dblclick="goTo(retro._id)">
+                <td style="vertical-align: middle; text-align: center;"><span>{{retro.description}}</span></td>
+                <td style="vertical-align: middle; text-align: center;">{{retro.isClosed ? 'Closed' : 'Open'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <section class="col-md-12 col-sm-12 col-xs-12" style="padding: 0;">
+            <div class="pull-right">
+                <ul class="pagination">
+                    <li ng-class="{disabled : currentPage == 0}"><a ng-click="currentPage=0">&laquo; First</a></li>
+                    <li ng-repeat="n in [] | range: numberOfPages()" ng-class="{active: currentPage == $index}"><a ng-click="page($index)">{{$index + 1}}</a></li>
+                    <li ng-class="{ disabled : currentPage >= retros.length/pageSize - 1 }"><a ng-click="currentPage=numberOfPages()-1">Last &raquo;</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
