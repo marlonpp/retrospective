@@ -59,6 +59,21 @@ public class RetrospectiveController  extends BaseController {
         return ok(retro.id.toString());
     }
 
+    //@EnsureContentType(ContentType.JSON)
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result removeInput(String retroId, int index) throws IOException {
+        response().setContentType("application/json");
+        Input input = bindObject(Input.class);
+
+        Retrospective retro = retrospectiveDao.findById(new ObjectId(retroId));
+
+        retro.inputs.remove(index);
+
+        retrospectiveDao.save(retro);
+        RealTimeRetrospective.newInput(retro.id.toString());
+        return ok(retro.id.toString());
+    }
+
     public WebSocket<JsonNode> getRetrospectiveWS(final String retroId) {
         return new WebSocket<JsonNode>() {
 

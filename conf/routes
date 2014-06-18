@@ -6,12 +6,13 @@
 GET     /                           controllers.Application.index
 
 # RESTful APIs
-GET			/retrospectivesWS               @controllers.RetrospectiveController.getRetrospectivesWS()
-GET			/retrospectiveWS/:retroId                @controllers.RetrospectiveController.getRetrospectiveWS(retroId : String)
-GET			/retrospective                  @controllers.RetrospectiveController.getRetrospectives()
-GET			/retrospective/:retroId         @controllers.RetrospectiveController.getRetrospective(retroId : String)
-POST		/retrospective			        @controllers.RetrospectiveController.createRetrospective()
-POST		/retrospective/:retroId/input	@controllers.RetrospectiveController.addInput(retroId : String)
+GET			/retrospectivesWS                       @controllers.RetrospectiveController.getRetrospectivesWS()
+GET			/retrospectiveWS/:retroId               @controllers.RetrospectiveController.getRetrospectiveWS(retroId : String)
+GET			/retrospective                          @controllers.RetrospectiveController.getRetrospectives()
+GET			/retrospective/:retroId                 @controllers.RetrospectiveController.getRetrospective(retroId : String)
+POST		/retrospective			                @controllers.RetrospectiveController.createRetrospective()
+POST		/retrospective/:retroId/input	        @controllers.RetrospectiveController.addInput(retroId : String)
+DELETE		/retrospective/:retroId/input/:index	@controllers.RetrospectiveController.removeInput(retroId : String, index : Integer)
 
 # Map static resources from the /public folder
 GET        /app/*file              controllers.Assets.at(path="/public/app", file)

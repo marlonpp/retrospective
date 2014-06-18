@@ -23,8 +23,6 @@ retrospective.service('retroService', function ($http, $location) {
     service.subscribe = function(callback) { service.callback = callback; }
 
     function setUrl(sufix){
-        console.log($location.host() + $location.port());
-        //ws url sample: ws://16.103.103.3:9000/retrospectiveWS/"+retroId
         url = "ws://"+$location.host()+":"+$location.port()+"/"+sufix;
     }
     function getAll() {
@@ -40,9 +38,11 @@ retrospective.service('retroService', function ($http, $location) {
     }
 
     function addInput(retroId, input) {
-        console.log(retroId);
-        console.log(input);
         return $http.post('/retrospective/'+retroId+'/input', input);
+    }
+
+    function removeInput(retroId, index){
+        return $http.delete('/retrospective/'+retroId+'/input/'+index);
     }
 
     return {
@@ -50,6 +50,7 @@ retrospective.service('retroService', function ($http, $location) {
         getById: getById,
         add : add,
         addInput : addInput,
+        removeInput : removeInput,
         setUrl : setUrl,
         service: service
     }

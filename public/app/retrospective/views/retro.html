@@ -1,11 +1,3 @@
-<style>
-    .home {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 18px;
-    }
-</style>
-
 <div class="home">
     <div class="alert alert-info">
         {{ retro.description }}
@@ -39,9 +31,17 @@
                 <div class="panel-body">
                     <div class="panel-body" style="padding: 5px;">
                         <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'START' }">
-                            <i class="pin"></i>
+                            <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                             <blockquote class="note yellow">
+                                <div style="text-align: right;">
+                                    <div class="badge badge-inverse">
+                                        <div>{{input.votes}}</div>
+                                    </div>
+                                </div>
                                 {{input.description}}
+                                <div style="text-align: right;">
+                                    <span class="glyphicon glyphicon-thumbs-up" ng-click="addVote(input)"></span>
+                                </div>
                             </blockquote>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                 <div class="panel-body">
                     <div class="panel-body" style="padding: 5px;">
                         <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'CONTINUE' }">
-                            <i class="pin"></i>
+                            <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                             <blockquote class="note green">
                                 {{input.description}}
                             </blockquote>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'STOP' }">
-                        <i class="pin"></i>
+                        <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                         <blockquote class="note red">
                             {{input.description}}
                         </blockquote>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'SHOUTOUT' }">
-                        <i class="pin"></i>
+                        <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                         <blockquote class="note blue">
                             {{input.description}}
                         </blockquote>

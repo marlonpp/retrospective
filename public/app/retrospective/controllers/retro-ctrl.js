@@ -25,5 +25,14 @@ retrospective.controller('RetroCtrl',
             }
         };
 
+        $scope.remove = function(input){
+            retroService.removeInput(retroId, $scope.retro.inputs.indexOf(input));
+        };
+
+        $scope.addVote = function(input){
+            console.log($scope.retro.inputs.indexOf(input));
+            retroService.addVote(retroId, $scope.retro.inputs.indexOf(input));
+        }
+
     }
 );
