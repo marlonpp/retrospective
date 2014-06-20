@@ -17,18 +17,18 @@
         <table class="table" border="1px solid #cccccc" style="margin-bottom: 0px; background-color: white;" width="95%;">
             <thead>
             <tr style="height: 50px;">
-                <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Description</th>
-                <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Date Created</th>
-                <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Status</th>
+                <th style="width: 50%; border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Description</th>
+                <th style="width: 25%; border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Date Created</th>
+                <th style="width: 25%; border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Status</th>
             </tr>
             </thead>
             <tbody>
             <tr style="height: 50px;"
                 ng-repeat="retro in retros  | startFrom: currentPage*pageSize | limitTo:pageSize | orderBy : 'createdTime' : true"
                     ng-dblclick="goTo(retro._id)" ng-class="{ 'zebra' : $odd }">
-                <td style="width: 50%; vertical-align: middle; text-align: center;"><span>{{retro.description}}</span></td>
-                <td style="width: 25%; vertical-align: middle; text-align: center;">{{retro.createdTime |  date:'MM/dd/yyyy'}}</td>
-                <td style="width: 25%; vertical-align: middle; text-align: center;">{{retro.isClosed ? 'Closed' : 'Open'}}</td>
+                <td style="vertical-align: middle; text-align: center;"><span>{{retro.description}}</span></td>
+                <td style="vertical-align: middle; text-align: center;">{{retro.createdTime |  date:'MM/dd/yyyy'}}</td>
+                <td style="vertical-align: middle; text-align: center;">{{retro.isClosed ? 'Closed' : 'Open'}}</td>
             </tr>
             </tbody>
         </table>
