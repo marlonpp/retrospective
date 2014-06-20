@@ -81,7 +81,7 @@ public class RealTimeRetrospective extends UntypedActor{
             } else{
                 Map<String, WebSocket.Out<JsonNode>> tempMap = registered.get(registration.retroId);
                 if(tempMap == null){
-                    tempMap = new HashMap<>();
+                    tempMap = new HashMap<String, WebSocket.Out<JsonNode>>();
                     tempMap.put(registration.id, registration.channel);
                     registered.put(registration.retroId, tempMap);
                 } else{
