@@ -37,30 +37,6 @@ body {
     outline: 3px #f2dede !important;
 }
 
-.btn-warning {
-    background-color: #FCF8E3;
-    border-color: #faebcc;
-    color: #8A6D3B;
-}
-
-.btn-success {
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-    color: #3c763d;
-}
-
-.btn-danger {
-    background-color: #f2dede;
-    border-color: #ebccd1;
-    color: #a94442;
-}
-
-.btn-info {
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-    color: #31708f;
-}
-
 .quote-container {
     margin-top: 30px;
     position: relative;
@@ -110,7 +86,7 @@ body {
 }
 
 .red {
-    background: #D14719;
+    background: #FF4D4D;
     -webkit-transform: rotate(2deg);
     -moz-transform: rotate(2deg);
     -o-transform: rotate(2deg);
@@ -169,4 +145,8 @@ body {
     -webkit-transform-origin: 50% 100%;
     -ms-transform-origin: 50% 100%;
     -o-transform-origin: 50% 100%;
+}
+
+.zebra {
+    background-color: #EEEEEE;
 }

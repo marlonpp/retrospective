@@ -12,4 +12,5 @@ public class Retrospective extends BaseEntity {
     public List<Input> inputs;
     public boolean isClosed = false;
 
+
 }

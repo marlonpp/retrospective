@@ -5,7 +5,7 @@
     <div id="newRetrospective"  style="margin-bottom: 10px; display: none;" class="row">
         <form name="retroForm" ng-submit="submitForm()" novalidate>
             <label for="desc">Description: </label>
-            <input id="desc" type="text" ng-model="description" ng-minlength="1" required/>
+            <input id="desc" type="text" ng-model="description" ng-minlength="1" required style="width: 36%;"/>
             <input type="submit" class="btn btn-primary" ng-disabled="retroForm.$invalid" value="Add"/>
         </form>
     </div>
@@ -18,13 +18,17 @@
             <thead>
             <tr style="height: 50px;">
                 <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Description</th>
+                <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Date Created</th>
                 <th style="border-right: 0px; border-left: 0px; text-align: center; vertical-align: middle;">Status</th>
             </tr>
             </thead>
             <tbody>
-            <tr style="height: 50px;" ng-repeat="retro in retros | startFrom: currentPage*pageSize | limitTo:pageSize"  ng-dblclick="goTo(retro._id)">
-                <td style="vertical-align: middle; text-align: center;"><span>{{retro.description}}</span></td>
-                <td style="vertical-align: middle; text-align: center;">{{retro.isClosed ? 'Closed' : 'Open'}}</td>
+            <tr style="height: 50px;"
+                ng-repeat="retro in retros  | startFrom: currentPage*pageSize | limitTo:pageSize | orderBy : 'createdTime' : true"
+                    ng-dblclick="goTo(retro._id)" ng-class="{ 'zebra' : $odd }">
+                <td style="width: 50%; vertical-align: middle; text-align: center;"><span>{{retro.description}}</span></td>
+                <td style="width: 25%; vertical-align: middle; text-align: center;">{{retro.createdTime |  date:'MM/dd/yyyy'}}</td>
+                <td style="width: 25%; vertical-align: middle; text-align: center;">{{retro.isClosed ? 'Closed' : 'Open'}}</td>
             </tr>
             </tbody>
         </table>

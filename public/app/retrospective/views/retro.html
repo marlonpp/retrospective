@@ -1,16 +1,36 @@
 <div class="home">
-    <div class="alert alert-info">
-        {{ retro.description }}
-    </div>
-    <section class="row" style="margin-bottom: 10px;">
+    <section class="row alert alert-info" style="margin-left: 0px; margin-right: 0px;">
+        <div class="col-md-9 text-left">
+            <span class="edit" id="descSpan">{{ retro.description }}</span>
+            <input class="edit" style="display: none; width: 90%;" id="desc" type="text" ng-model="retro.description" ng-minlength="1" required/>
+            <input class="edit" style="display: none; margin-left: 10px;" id="isClosed" type="checkbox" ng-model="retro.isClosed"/>
+            <span class="edit" style="display: none;">Close</span>
+        </div>
+        <div class="col-md-3 text-right">
+            <button id="btnEdit" type="button" class="edit btn btn-info" ng-click="editCancel()">
+                <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+            <button id="btnSave" style="display: none;" type="button" class="edit btn btn-success" ng-click="save()">
+                <span class="glyphicon glyphicon-ok"></span> Save
+            </button>
+            <button id="btnCancel" style="display: none;" type="button" class="edit btn btn-danger" ng-click="editCancel()">
+                <span class="glyphicon glyphicon-remove"></span> Cancel
+            </button>
+        </div>
+    </section>
+    <section class="row" style="margin-bottom: 10px;" ng-hide="retro.isClosed">
         <form name="inputForm" ng-submit="submitForm()" novalidate>
             <div class="col-md-12 text-left" >
                 <label for="type">Type: </label>
                 <div id="type" class="btn-group" style="margin-bottom: 10px;">
-                    <button type="button" class="btn btn-warning" ng-class="{active : type == 'START'}" ng-click="type = 'START'">Start</button>
-                    <button type="button" class="btn btn-success" ng-class="{active : type == 'CONTINUE'}" ng-click="type = 'CONTINUE'">Continue</button>
-                    <button type="button" class="btn btn-danger"  ng-class="{active : type == 'STOP'}" ng-click="type = 'STOP'">Stop</button>
-                    <button type="button" class="btn btn-info" ng-class="{active : type == 'SHOUTOUT'}" ng-click="type = 'SHOUTOUT'">Shout Out</button>
+                    <button type="button" class="btn btn-warning" ng-class="{active : type == 'START'}"
+                            ng-click="type = 'START'" style="background-color: #FCF8E3; border-color: #faebcc; color: #8A6D3B;">Start</button>
+                    <button type="button" class="btn btn-success" ng-class="{active : type == 'CONTINUE'}"
+                            ng-click="type = 'CONTINUE'" style="background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d;">Continue</button>
+                    <button type="button" class="btn btn-danger"  ng-class="{active : type == 'STOP'}"
+                            ng-click="type = 'STOP'" style="background-color: #f2dede; border-color: #ebccd1; color: #a94442;">Stop</button>
+                    <button type="button" class="btn btn-info" ng-class="{active : type == 'SHOUTOUT'}"
+                            ng-click="type = 'SHOUTOUT'" style="background-color: #d9edf7; border-color: #bce8f1; color: #31708f;">Shout Out</button>
                 </div>
             </div>
             <div  class="col-md-12 text-left">
@@ -18,6 +38,8 @@
             </div>
             <div  class="col-md-12 text-left">
                 <input type="submit" class="btn btn-primary" ng-disabled="inputForm.$invalid" value="Add"/>
+                <a href="javascript:window.open('http://www.emoji-cheat-sheet.com/')">Put some emotion on it.</a>
+                <i class='emoji emoji_smile'>smile</i>
             </div>
         </form>
 
@@ -30,17 +52,17 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel-body" style="padding: 5px;">
-                        <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'START' }">
-                            <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
+                        <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'START' } | orderBy : 'votes': true">
+                            <i title="Remove this input." class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                             <blockquote class="note yellow">
                                 <div style="text-align: right;">
                                     <div class="badge badge-inverse">
                                         <div>{{input.votes}}</div>
                                     </div>
                                 </div>
-                                {{input.description}}
-                                <div style="text-align: right;">
-                                    <span class="glyphicon glyphicon-thumbs-up" ng-click="addVote(input)"></span>
+                                <p ng-bind-html="input.description | emoji"></p>
+                                <div title="Like it!" style="text-align: right;" ng-hide="retro.isClosed">
+                                    <span style="cursor: pointer" class="glyphicon glyphicon-thumbs-up" ng-click="addVote(input)"></span>
                                 </div>
                             </blockquote>
                         </div>
@@ -55,10 +77,18 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel-body" style="padding: 5px;">
-                        <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'CONTINUE' }">
-                            <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
+                        <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'CONTINUE' } | orderBy : 'votes': true">
+                            <i title="Remove this input." class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                             <blockquote class="note green">
+                                <div style="text-align: right;">
+                                    <div class="badge badge-inverse">
+                                        <div>{{input.votes}}</div>
+                                    </div>
+                                </div>
                                 {{input.description}}
+                                <div title="Like it!" style="text-align: right;" ng-hide="retro.isClosed">
+                                    <span style="cursor: pointer" class="glyphicon glyphicon-thumbs-up" ng-click="addVote(input) | orderBy : 'votes': true"></span>
+                                </div>
                             </blockquote>
                         </div>
                     </div>
@@ -73,10 +103,18 @@
                     <h3 style="margin-top: 0px;">Stop</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'STOP' }">
-                        <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
+                    <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'STOP' } | orderBy : 'votes': true">
+                        <i title="Remove this input." class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                         <blockquote class="note red">
+                            <div style="text-align: right;">
+                                <div class="badge badge-inverse">
+                                    <div>{{input.votes}}</div>
+                                </div>
+                            </div>
                             {{input.description}}
+                            <div title="Like it!" style="text-align: right;" ng-hide="retro.isClosed">
+                                <span style="cursor: pointer" class="glyphicon glyphicon-thumbs-up" ng-click="addVote(input)"></span>
+                            </div>
                         </blockquote>
                     </div>
                 </div>
@@ -89,9 +127,17 @@
                 </div>
                 <div class="panel-body">
                     <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'SHOUTOUT' }">
-                        <i class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
+                        <i title="Remove this input." class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                         <blockquote class="note blue">
+                            <div style="text-align: right;">
+                                <div class="badge badge-inverse">
+                                    <div>{{input.votes}}</div>
+                                </div>
+                            </div>
                             {{input.description}}
+                            <div title="Like it!" style="text-align: right;" ng-hide="retro.isClosed">
+                                <span style="cursor: pointer" class="glyphicon glyphicon-thumbs-up" ng-click="addVote(input)"></span>
+                            </div>
                         </blockquote>
                     </div>
                 </div>

@@ -5,20 +5,26 @@ function HomeCtrl($scope, $location, retroService) {
     $scope.description = "";
 
     $scope.currentPage = 0;
-    $scope.pageSize = 3;
+    $scope.pageSize = 10;
     $scope.retros = [];
 
     retroService.setUrl("retrospectivesWS");
     retroService.service.connect();
 
     retroService.service.subscribe(function(response) {
-        if (Array.isArray(response)) {
-            $scope.retros = response;
-        } else {
-            console.log(response);
-            $scope.retros.unshift(response);
-        }
-        $scope.$apply();
+        $scope.$apply(function(){
+            if (Array.isArray(response)) {
+                $scope.retros = response;
+            } else {
+                var index = indexById(response);
+                if(index >= 0){
+                    $scope.retros[index] = response;
+                }
+                else{
+                    $scope.retros.push(response);
+                }
+            }
+        });
     });
 
     $scope.numberOfPages = function(){
@@ -63,5 +69,14 @@ function HomeCtrl($scope, $location, retroService) {
             button.toggleClass( "btn-danger");
         }
     };
+
+    function indexById(retro){
+        for (var j = 0; j < $scope.retros.length; j++) {
+            if ($scope.retros[j]._id === retro._id) {
+                return j;
+            }
+        }
+        return -1;
+    }
 
 });

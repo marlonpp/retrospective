@@ -45,12 +45,17 @@ retrospective.service('retroService', function ($http, $location) {
         return $http.delete('/retrospective/'+retroId+'/input/'+index);
     }
 
+    function addVote(retroId, index){
+        return $http.get('/retrospective/'+retroId+'/input/'+index+"/vote");
+    }
+
     return {
         getAll : getAll,
         getById: getById,
         add : add,
         addInput : addInput,
         removeInput : removeInput,
+        addVote : addVote,
         setUrl : setUrl,
         service: service
     }

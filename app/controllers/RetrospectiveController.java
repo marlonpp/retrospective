@@ -16,6 +16,7 @@ import play.mvc.WebSocket;
 import utils.Commons;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class RetrospectiveController  extends BaseController {
     @Inject
@@ -36,9 +37,19 @@ public class RetrospectiveController  extends BaseController {
     public Result createRetrospective() throws IOException {
         response().setContentType("application/json");
         Retrospective retro = bindObject(Retrospective.class);
-
+        boolean editing = false;
+        if(retro.id == null){
+            retro.createdTime = Calendar.getInstance().getTime();
+            retro.lastUpdatedTime = Calendar.getInstance().getTime();
+        } else {
+            retro.lastUpdatedTime = Calendar.getInstance().getTime();
+            editing = true;
+        }
         retrospectiveDao.save(retro);
         RealTimeRetrospective.newRetro(retro.id.toString());
+        if(editing){
+            RealTimeRetrospective.newInput(retro.id.toString());
+        }
         return ok(retro.id.toString());
     }
 
@@ -59,15 +70,25 @@ public class RetrospectiveController  extends BaseController {
         return ok(retro.id.toString());
     }
 
-    //@EnsureContentType(ContentType.JSON)
     @BodyParser.Of(BodyParser.Json.class)
     public Result removeInput(String retroId, int index) throws IOException {
         response().setContentType("application/json");
-        Input input = bindObject(Input.class);
+
+        Retrospective retro = retrospectiveDao.findById(new ObjectId(retroId));
+        retro.inputs.remove(index);
+
+        retrospectiveDao.save(retro);
+        RealTimeRetrospective.newInput(retro.id.toString());
+        return ok(retro.id.toString());
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result addVote(String retroId, int index) throws IOException {
+        response().setContentType("application/json");
 
         Retrospective retro = retrospectiveDao.findById(new ObjectId(retroId));
 
-        retro.inputs.remove(index);
+        retro.inputs.get(index).votes += 1;
 
         retrospectiveDao.save(retro);
         RealTimeRetrospective.newInput(retro.id.toString());

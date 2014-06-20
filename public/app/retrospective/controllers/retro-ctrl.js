@@ -30,8 +30,16 @@ retrospective.controller('RetroCtrl',
         };
 
         $scope.addVote = function(input){
-            console.log($scope.retro.inputs.indexOf(input));
             retroService.addVote(retroId, $scope.retro.inputs.indexOf(input));
+        }
+
+        $scope.save = function(){
+            retroService.add($scope.retro);
+            $scope.editCancel();
+        }
+
+        $scope.editCancel = function(){
+            $(".edit").toggle();
         }
 
     }
