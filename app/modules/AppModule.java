@@ -39,15 +39,11 @@ public class AppModule extends AbstractModule {
     @Singleton
     public Mongo provideMongo() throws UnknownHostException {
         String mongoHost = Config.getString("mongodb.host");
-        int mongoPort = Config.getInt("mongodb.port");
         String dbName = Config.getString("mongodb.dbname");
-        if (mongoPort < 0) {
-            mongoPort = 27017;
-        }
         if (mongoHost == null || mongoHost.isEmpty()) {
             mongoHost = "127.0.0.1";
         }
-        DBAddress address = new DBAddress(mongoHost, mongoPort, dbName);
+        DBAddress address = new DBAddress(mongoHost, dbName);
         return Mongo.connect(address).getMongo();
     }
     
