@@ -24,6 +24,7 @@ import org.jongo.marshall.jackson.configuration.PropertyModifier;
 import org.jongo.query.BsonQueryFactory;
 import org.jongo.query.QueryFactory;
 import utils.Config;
+import play.Logger;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -40,8 +41,12 @@ public class AppModule extends AbstractModule {
     public Mongo provideMongo() throws UnknownHostException {
         String mongoHost = Config.getString("mongodb.host");
         String dbName = Config.getString("mongodb.dbname");
+
+        Logger.info("Host ==> "+mongoHost);
+        Logger.info("Host ==> "+dbName);
+
         if (mongoHost == null || mongoHost.isEmpty()) {
-            mongoHost = "127.0.0.1";
+            mongoHost = "127.0.0.1:27017";
         }
         DBAddress address = new DBAddress(mongoHost, dbName);
         return Mongo.connect(address).getMongo();
