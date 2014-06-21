@@ -1,6 +1,7 @@
 'use strict';
 
-var retrospective = angular.module('retrospective', ['ngResource', 'ngRoute', 'routeStyles', 'pascalprecht.translate', 'ngSanitize', 'ui.bootstrap', 'emoji']);
+var retrospective = angular.module('retrospective', ['ngResource', 'ngRoute', 'routeStyles', 'pascalprecht.translate',
+    'ngSanitize', 'ui.bootstrap', 'emoji', 'angular-gestures']);
 
 retrospective.config(function ($routeProvider) {
 

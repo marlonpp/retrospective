@@ -1,12 +1,12 @@
 <div class="home">
     <section class="row alert alert-info" style="margin-left: 0px; margin-right: 0px;">
-        <div class="col-md-9 text-left">
+        <div class="col-md-9 col-sm-12 text-left">
             <span class="edit" id="descSpan">{{ retro.description }}</span>
             <input class="edit" style="display: none; width: 90%;" id="desc" type="text" ng-model="retro.description" ng-minlength="1" required/>
             <input class="edit" style="display: none; margin-left: 10px;" id="isClosed" type="checkbox" ng-model="retro.isClosed"/>
             <span class="edit" style="display: none;">Close</span>
         </div>
-        <div class="col-md-3 text-right">
+        <div class="col-md-3 col-sm-12 text-right">
             <button id="btnEdit" type="button" class="edit btn btn-info" ng-click="editCancel()">
                 <span class="glyphicon glyphicon-pencil"></span> Edit
             </button>

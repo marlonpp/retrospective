@@ -40,7 +40,6 @@ function HomeCtrl($scope, $location, retroService) {
     };
 
     $scope.goTo = function(id){
-        console.log('test '+id);
         $location.url("/retro/"+id);
     };
 

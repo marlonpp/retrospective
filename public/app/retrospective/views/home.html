@@ -10,7 +10,7 @@
         </form>
     </div>
     <div  style="margin-bottom: 10px;" class="row">
-        <input id="addNew" type="button" class="btn btn-primary row" value="Add New" style="width: 50%" ng-click="addNew();"/>
+        <input id="addNew" type="button" class="btn btn-primary row" value="Add New" style="width: 50%" ng-click="addNew()"/>
     </div>
     <div class="row">
         <!-- Table -->
@@ -25,7 +25,7 @@
             <tbody>
             <tr style="height: 50px;"
                 ng-repeat="retro in retros  | startFrom: currentPage*pageSize | limitTo:pageSize | orderBy : 'createdTime' : true"
-                    ng-dblclick="goTo(retro._id)" ng-class="{ 'zebra' : $odd }">
+                    ng-dblclick="goTo(retro._id)" hm-double-tap="goTo(retro._id)" ng-class="{ 'zebra' : $odd }">
                 <td style="vertical-align: middle; text-align: center;"><span>{{retro.description}}</span></td>
                 <td style="vertical-align: middle; text-align: center;">{{retro.createdTime |  date:'MM/dd/yyyy'}}</td>
                 <td style="vertical-align: middle; text-align: center;">{{retro.isClosed ? 'Closed' : 'Open'}}</td>
