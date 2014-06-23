@@ -32,7 +32,7 @@ retrospective.controller('RetroCtrl',
         $scope.remove = function(input){
             var index = getIndex(input);
             $scope.retro.inputs.splice(index,1);
-            retroService.removeInput(retroId, $scope.retro.inputs.indexOf(input));
+            retroService.removeInput(retroId, index);
         };
 
         $scope.addVote = function(input){
