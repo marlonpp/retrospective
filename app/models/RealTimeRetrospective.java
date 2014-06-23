@@ -68,9 +68,7 @@ public class RealTimeRetrospective extends UntypedActor{
 
     @Override
     public void onReceive(Object message) {
-        Logger.info("Message Received ==> " + message.toString() + " - type ==>");
         if (message instanceof RegistrationMessage) {
-
             // Received a Join message
             RegistrationMessage registration = (RegistrationMessage) message;
             Logger.info("Registering " + registration.id);
@@ -103,7 +101,7 @@ public class RealTimeRetrospective extends UntypedActor{
             RetroMessage retroMessage = (RetroMessage) message;
             JsonNode retrospective;
             try {
-                Thread.sleep(200);
+                Thread.sleep(50);
                 retrospective = retrospectiveDao.findById(new ObjectId(retroMessage.id)).toJson();
                 if(retroMessage.type == Commons.LIST) {
                     for (WebSocket.Out<JsonNode> channel : registeredList.values()) {
@@ -111,6 +109,7 @@ public class RealTimeRetrospective extends UntypedActor{
                     }
                 } else{
                     for (WebSocket.Out<JsonNode> channel : registered.get(retroMessage.id).values()) {
+                        Logger.info("Sending retro info to channel: "+channel.toString());
                         channel.write(retrospective);
                     }
                 }

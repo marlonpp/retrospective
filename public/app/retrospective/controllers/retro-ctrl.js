@@ -18,6 +18,9 @@ retrospective.controller('RetroCtrl',
         $scope.submitForm = function() {
             if ($scope.inputForm.$valid) {
                 var input = {description : $scope.description, type : $scope.type, votes : 0};
+                if($scope.retro.inputs === undefined){
+                    $scope.retro.inputs = [];
+                }
                 $scope.retro.inputs.push(input);
                 retroService.addInput(retroId, input).then(function(){
                     $scope.description = "";

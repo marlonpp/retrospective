@@ -126,7 +126,7 @@
                     <h3 style="margin-top: 0px;">Shout Out</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'SHOUTOUT' }">
+                    <div class="quote-container col-md-6" ng-repeat="input in retro.inputs | filter : { type: 'SHOUTOUT' } | orderBy : 'votes': true"">
                         <i title="Remove this input." class="pin" ng-click="remove(input)" style="cursor: pointer"></i>
                         <blockquote class="note blue">
                             <div style="text-align: right;">
